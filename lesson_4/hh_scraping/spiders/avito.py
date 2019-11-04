@@ -8,8 +8,14 @@ class AvitoSpider(scrapy.Spider):
     start_urls = ['https://www.avito.ru/kazan/kvartiry/prodam?cd=1']
 
     def parse(self, response: HtmlResponse):
+        # pagination = response.xpath(
+        #     '//a[contains(@class, "js-pagination-next")]/@href'
+        # ).extract_first()
+
         pagination = response.xpath(
-            '//a[contains(@class, "pagination-page")]/@href'
+            '//div[contains(@class, "pagination")]/'
+            'div[contains(@class, "pagination-nav")]/'
+            'a[contains(@class, "js-pagination-next")]/@href'
         ).extract_first()
 
         if pagination is not None:
